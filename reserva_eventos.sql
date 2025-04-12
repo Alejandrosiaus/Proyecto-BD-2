@@ -29,3 +29,26 @@ CREATE TABLE reserva (
     FOREIGN KEY (id_usuario) REFERENCES usuario(id),
     FOREIGN KEY (id_asiento) REFERENCES asiento(id)
 );
+
+-- Insertar un evento
+INSERT INTO evento (nombre, fecha)
+VALUES ('Concierto de Rock', '2025-06-15');
+
+-- Insertar 30 asientos para el evento (id_evento = 1)
+DO $$
+BEGIN
+    FOR i IN 1..30 LOOP
+        INSERT INTO asiento (id_evento, numero_asiento)
+        VALUES (1, i);
+    END LOOP;
+END $$;
+
+-- Insertar 10 usuarios
+INSERT INTO usuario (nombre) VALUES
+('Ana'), ('Carlos'), ('Laura'), ('Miguel'), ('Sofía'),
+('Daniel'), ('Elena'), ('Pablo'), ('Valeria'), ('Andrés');
+
+-- Insertar 2 reservas iniciales (usuarios 1 y 2 reservan los asientos 1 y 2)
+INSERT INTO reserva (id_usuario, id_asiento) VALUES
+(1, 1),
+(2, 2);
