@@ -51,3 +51,32 @@ def reservar_asiento(usuario_id):
         with lock:
             RESERVAS_FALLIDAS += 1
         print(f"Usuario {usuario_id}: Error general -> {e}")
+        
+def simular_concurrencia(cantidad_usuarios):
+    global RESERVAS_EXITOSAS, RESERVAS_FALLIDAS
+    RESERVAS_EXITOSAS = 0
+    RESERVAS_FALLIDAS = 0
+
+    hilos = []
+    inicio = time.time()
+    for i in range(cantidad_usuarios):
+        hilo = threading.Thread(target=reservar_asiento, args=(i+1,))
+        hilos.append(hilo)
+        hilo.start()
+
+    for hilo in hilos:
+        hilo.join()
+    fin = time.time()
+
+    tiempo_ms = round((fin - inicio)*1000, 2)
+
+    print("\n--- RESULTADOS ---")
+    print(f"Usuarios: {cantidad_usuarios}")
+    print(f"Nivel de aislamiento: {NIVEL_AISLAMIENTO}")
+    print(f"Reservas exitosas: {RESERVAS_EXITOSAS}")
+    print(f"Reservas fallidas: {RESERVAS_FALLIDAS}")
+    print(f"Tiempo total: {tiempo_ms} ms")
+    print("------------------\n")
+
+if _name_ == "_main_":
+    simular_concurrencia(30)
