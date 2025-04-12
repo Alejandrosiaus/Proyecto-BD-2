@@ -52,3 +52,17 @@ INSERT INTO usuario (nombre) VALUES
 INSERT INTO reserva (id_usuario, id_asiento) VALUES
 (1, 1),
 (2, 2);
+
+-- Mostrar eventos
+SELECT * FROM evento;
+
+-- Mostrar usuarios
+SELECT * FROM usuario;
+
+-- Mostrar asientos del evento
+SELECT * FROM asiento WHERE id_evento = 1;
+
+-- Mostrar reservas hechas
+SELECT * FROM reserva;
+
+DELETE FROM reserva WHERE id_asiento = 7;
